@@ -10,29 +10,6 @@ import com.mk.pe.model.PromoConfig;
 public class ProductServiceImpl implements ProductService {
 
 	@Override
-	public void getPriceByType(Product product) {
-		switch (product.id)
-	    {
-	        case "A":
-	            product.price = 50;
-
-	            break;
-	        case "B":
-	            product.price = 30;
-
-	            break;
-	        case "C":
-	            product.price = 20;
-
-	            break;
-	        case "D":
-	            product.price = 15;
-	            break;
-	    }
-		
-	}
-
-	@Override
 	public int getTotalPrice(List<Product> products) {
 		int counterOfA = 0;
 	    int priceOfA = Configurer.priceValueMap.get("A");
