@@ -2,8 +2,10 @@ package com.mk.pe.service;
 
 import java.util.List;
 
+import com.mk.pe.config.Configurer;
 import com.mk.pe.interfaces.ProductService;
 import com.mk.pe.model.Product;
+import com.mk.pe.model.PromoConfig;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -33,13 +35,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int getTotalPrice(List<Product> products) {
 		int counterOfA = 0;
-	    int priceOfA = 50;
+	    int priceOfA = Configurer.priceValueMap.get("A");
 	    int counterOfB = 0;
-	    int priceOfB = 30;
+	    int priceOfB = Configurer.priceValueMap.get("B");
 	    int counterOfC = 0;
-	    int priceOfC = 20;
+	    int priceOfC = Configurer.priceValueMap.get("C");
 	    int counterOfD = 0;
-	    int priceOfD = 15;
+	    int priceOfD = Configurer.priceValueMap.get("D");
 
 	    for (Product pr : products)
 	    {
@@ -63,12 +65,16 @@ public class ProductServiceImpl implements ProductService {
 	                break;
 	        }
 	    }
-	    int totalPriceOfA = (counterOfA / 3) * 130 + (counterOfA % 3 * priceOfA);
-	    int totalPriceOfB = (counterOfB / 2) * 45 + (counterOfB % 2 * priceOfB);
+	    PromoConfig pcA = Configurer.configMap.get("A");
+	    PromoConfig pcB = Configurer.configMap.get("B");
+	    PromoConfig pcCD = Configurer.configMap.get("CD");
+	    
+	    int totalPriceOfA = (counterOfA / pcA.getQty()) * pcA.getOfferPrice() + (counterOfA % pcA.getQty() * priceOfA);
+	    int totalPriceOfB = (counterOfB / pcB.getQty()) * pcB.getOfferPrice() + (counterOfB % pcB.getQty() * priceOfB);
 	    int totalPriceOfC = 0;
 	    int totalPriceOfD = 0;
 	    if(counterOfC == counterOfD) {
-	    	 totalPriceOfC = (counterOfC *30);
+	    	 totalPriceOfC = (counterOfC *pcCD.getOfferPrice());
 	    	 totalPriceOfD = 0;
 	    	
 	    }else {
